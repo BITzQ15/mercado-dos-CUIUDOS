@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mercado dos CUIUDO MAX - Supermercado INSANOS</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      🛒 Mercado dos CUIUDO <span>Online</span>
+    </div>
+    <nav>
+      <a href="#home">Início</a>
+      <a href="#produtos">Produtos</a>
+      <a href="#categorias">Categorias</a>
+      <a href="#contato">Contato</a>
+    </nav>
+    <button class="cart-btn" onclick="toggleCart()">
+      🛒 Carrinho
+      <span class="cart-count" id="cart-count">0</span>
+    </button>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h1>CUIUDO direto para sua casa</h1>
+      <p>Produtos selecionados com qualidade e preço justo</p>
+      <button class="btn-primary" onclick="document.getElementById('produtos').scrollIntoView({behavior:'smooth'})">
+        Ver Produtos
+      </button>
+    </div>
+  </section>
+
+  <!-- Categorias -->
+  <section class="categories" id="categorias">
+    <h2>Categorias</h2>
+    <div class="cat-buttons">
+      <button class="cat-btn active" onclick="filterProducts('todos')">Todos</button>
+      <button class="cat-btn" onclick="filterProducts('frutas')">Frutas</button>
+      <button class="cat-btn" onclick="filterProducts('legumes')">Legumes</button>
+      <button class="cat-btn" onclick="filterProducts('laticinios')">Laticínios</button>
+      <button class="cat-btn" onclick="filterProducts('padaria')">Padaria</button>
+      <button class="cat-btn" onclick="filterProducts('mercearia')">Mercearia</button>
+    </div>
+  </section>
+
+  <!-- Produtos -->
+  <section class="products" id="produtos">
+    <h2>Nossos Produtos</h2>
+    <div class="product-grid" id="product-grid">
+      <!-- Produtos serão inseridos via JavaScript -->
+    </div>
+  </section>
+
+  <!-- Carrinho -->
+  <div class="overlay" id="overlay" onclick="toggleCart()"></div>
+  <div class="cart-sidebar" id="cart-sidebar">
+    <div class="cart-header">
+      <h3>Seu Carrinho</h3>
+      <button class="close-cart" onclick="toggleCart()">×</button>
+    </div>
+    <div class="cart-items" id="cart-items">
+      <p style="text-align:center; color:#999; margin-top:50px;">Seu carrinho está vazio</p>
+    </div>
+    <div class="cart-footer">
+      <div class="total">
+        <span>Total:</span>
+        <span id="cart-total">R$ 0,00</span>
+      </div>
+      <button class="checkout-btn" onclick="checkout()">Finalizar Compra</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer id="contato">
+    <p>© 2026 Mercado Fresco - Todos os direitos reservados</p>
+    <p style="margin-top:10px; font-size:0.9rem;">Entrega rápida • Qualidade garantida • Preços justos</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
