@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formas de Pagamento | Mercado dos CUIUDO</title>
+  <style>
+    /* ========================================
+       RESET GLOBAL E TIPOGRAFIA
+       Remove margens/paddings padrão do navegador
+       e define a fonte padrão do site
+    ======================================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box; /* Inclui padding e border no cálculo da largura */
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f5f7fa; /* Fundo cinza-azulado claro */
+      color: #333;              /* Cor padrão do texto */
+    }
+
+    /* ========================================
+       HEADER (CABEÇALHO)
+       Barra fixa no topo com logo, menu e carrinho
+    ======================================== */
+    header {
+      background: linear-gradient(135deg, #2e7d32, #1b5e20); /* Gradiente verde */
+      color: white;
+      padding: 15px 5%;
+      display: flex;
+      justify-content: space-between; /* Espaça logo | nav | carrinho */
+      align-items: center;
+      position: sticky;  /* Fica fixo ao rolar a página */
+      top: 0;
+      z-index: 100;      /* Fica acima de outros elementos */
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+
+    /* Logo do mercado */
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: white;
+    }
+
+    /* Badge amarelo ao lado do nome (ex: "Online") */
+    .logo span {
+      background: #ffeb3b;
+      color: #1b5e20;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+    }
+
+    /* Menu de navegação */
+    nav {
+      display: flex;
+      gap: 25px; /* Espaçamento entre os links */
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.3s; /* Animação suave no hover */
+    }
+
+    nav a:hover {
+      color: #ffeb3b; /* Fica amarelo ao passar o mouse */
+    }
+
+    /* Botão do carrinho */
+    .cart-btn {
+      background: #ffeb3b;
+      color: #1b5e20;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 30px; /* Formato arredondado (pill) */
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      position: relative; /* Necessário para posicionar o contador */
+    }
+
+    /* Contador de itens no carrinho (bolinha vermelha) */
+    .cart-count {
+      background: #d32f2f;
+      color: white;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      position: absolute;
+      top: -8px;
+      right: -8px;
+    }
+
+    /* ========================================
+       HERO (BANNER PRINCIPAL)
+       Área de destaque no topo da página
+    ======================================== */
+    .hero {
+      background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), /* Overlay escuro */
+                  linear-gradient(135deg, #2e7d32, #1b5e20);
+      height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+    }
+
+    .hero-content h1 {
+      font-size: 2.8rem;
+      margin-bottom: 12px;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.4); /* Sombra para melhor legibilidade */
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      opacity: 0.95;
+    }
+
+    /* ========================================
+       CONTEÚDO PRINCIPAL
+       Container centralizado da página
+    ======================================== */
+    .payment-section {
+      padding: 40px 5% 60px;
+      max-width: 1200px; /* Limita a largura em telas grandes */
+      margin: 0 auto;    /* Centraliza horizontalmente */
+    }
+
+    /* ========================================
+       SEÇÃO DESTACADA DO PIX
+       Card especial com QR Code e chave PIX
+    ======================================== */
+    .pix-highlight {
+      background: white;
+      border-radius: 16px;
+      padding: 35px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      margin-bottom: 40px;
+      display: flex;
+      flex-wrap: wrap; /* Quebra linha em telas menores */
+      gap: 30px;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #2e7d32; /* Borda verde para destaque */
+    }
+
+    /* Caixa do QR Code */
+    .pix-qr-box {
+      text-align: center;
+      flex-shrink: 0; /* Não encolhe */
+    }
+
+    .pix-qr-box img {
+      width: 200px;
+      height: 200px;
+      border-radius: 12px;
+      border: 5px solid #e8f5e9;
+      background: white;
+      padding: 8px;
+    }
+
+    .pix-qr-label {
+      margin-top: 12px;
+      font-size: 0.9rem;
+      color: #666;
+      font-weight: 500;
+    }
+
+    /* Informações e instruções do PIX */
+    .pix-info {
+      flex: 1;
+      min-width: 260px;
+      max-width: 440px;
+    }
+
+    .pix-info h2 {
+      font-size: 1.6rem;
+      color: #1b5e20;
+      margin-bottom: 10px;
+    }
+
+    .pix-info > p {
+      color: #666;
+      margin-bottom: 18px;
+      font-size: 1rem;
+    }
+
+    /* Caixa da chave PIX (com borda tracejada) */
+    .pix-key-box {
+      background: #e8f5e9;
+      border: 1px dashed #2e7d32;
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 18px;
+    }
+
+    .pix-key-box label {
+      display: block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #2e7d32;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .pix-key-value {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Courier New', monospace; /* Fonte monoespaçada para a chave */
+      font-size: 0.95rem;
+      word-break: break-all; /* Quebra a chave se for muito longa */
+      color: #333;
+    }
+
+    /* Botão "Copiar" da chave PIX */
+    .pix-key-value button {
+      background: #2e7d32;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 7px 14px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: 0.3s;
+    }
+
+    .pix-key-value button:hover {
+      background: #1b5e20;
+    }
+
+    /* Lista de passos para pagar com PIX */
+    .pix-steps {
+      list-style: none;
+      padding: 0;
+    }
+
+    .pix-steps li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 10px;
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    /* Número circular de cada passo */
+    .pix-steps li span {
+      background: #2e7d32;
+      color: white;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* ========================================
+       TÍTULO DAS SEÇÕES
+    ======================================== */
+    .section-title {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #1b5e20;
+      font-size: 2rem;
+    }
+
+    /* ========================================
+       GRID DE FORMAS DE PAGAMENTO
+       Cards das outras opções (cartão, boleto etc.)
+    ======================================== */
+    .methods-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Responsivo */
+      gap: 25px;
+      margin-bottom: 50px;
+    }
+
+    /* Card individual de cada forma de pagamento */
+    .method-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      transition: 0.3s;
+      display: flex;
+      flex-direction: column;
+      padding: 28px;
+    }
+
+    /* Efeito de elevação ao passar o mouse */
+    .method-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+    }
+
+    /* Ícone de cada método */
+    .method-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      margin-bottom: 16px;
+      background: #e8f5e9; /* Fundo verde claro */
+    }
+
+    .method-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 10px;
+      color: #222;
+    }
+
+    .method-card p {
+      color: #666;
+      font-size: 0.95rem;
+      flex-grow: 1; /* Empurra o badge para baixo */
+      margin-bottom: 16px;
+    }
+
+    /* Badges (etiquetas) dos cards */
+    .badge {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      background: #e8f5e9;
+      color: #1b5e20;
+    }
+
+    .badge-yellow {
+      background: #fff9c4;
+      color: #f57f17;
+    }
+
+    .badge-blue {
+      background: #e3f2fd;
+      color: #1565c0;
+    }
+
+    /* ========================================
+       SEÇÃO "COMO FUNCIONA"
+       Explica o processo de pagamento em 3 passos
+    ======================================== */
+    .how-it-works {
+      background: white;
+      border-radius: 16px;
+      padding: 35px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      margin-bottom: 30px;
+    }
+
+    .how-it-works h2 {
+      text-align: center;
+      color: #1b5e20;
+      margin-bottom: 30px;
+      font-size: 1.6rem;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 25px;
+    }
+
+    .step-item {
+      text-align: center;
+      padding: 10px;
+    }
+
+    /* Número grande de cada passo */
+    .step-num {
+      width: 48px;
+      height: 48px;
+      background: #2e7d32;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      font-weight: bold;
+      margin: 0 auto 14px;
+    }
+
+    .step-item h4 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+      color: #222;
+    }
+
+    .step-item p {
+      color: #666;
+      font-size: 0.95rem;
+    }
+
+    /* ========================================
+       CAIXA DE SEGURANÇA
+       Aviso sobre proteção dos dados
+    ======================================== */
+    .security-box {
+      background: #e8f5e9;
+      border-radius: 16px;
+      padding: 25px 30px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      border: 1px solid #c8e6c9;
+    }
+
+    .security-box .icon {
+      font-size: 2.2rem;
+      flex-shrink: 0;
+    }
+
+    .security-box h3 {
+      font-size: 1.15rem;
+      color: #1b5e20;
+      margin-bottom: 4px;
+    }
+
+    .security-box p {
+      color: #555;
+      font-size: 0.95rem;
+    }
+
+    /* ========================================
+       FOOTER (RODAPÉ)
+    ======================================== */
+    footer {
+      background: #1b5e20;
+      color: white;
+      text-align: center;
+      padding: 30px;
+      margin-top: 40px;
+    }
+
+    footer a {
+      color: #ffeb3b; /* Links em amarelo */
+      text-decoration: none;
+      margin: 0 12px;
+      font-weight: 500;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-links {
+      margin-bottom: 12px;
+    }
+
+    /* ========================================
+       RESPONSIVIDADE (MOBILE)
+       Ajustes para telas menores que 768px
+    ======================================== */
+    @media (max-width: 768px) {
+      /* Esconde o menu de navegação no celular */
+      nav {
+        display: none;
+      }
+
+      .hero-content h1 {
+        font-size: 2.1rem; /* Título menor */
+      }
+
+      .hero {
+        height: 220px; /* Banner mais baixo */
+      }
+
+      .pix-highlight {
+        padding: 25px 18px;
+      }
+
+      .pix-qr-box img {
+        width: 170px;
+        height: 170px;
+      }
+
+      /* Segurança fica em coluna no mobile */
+      .security-box {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <a href="#" class="logo">
+      🛒 Mercado dos CUIUDO <span>Online</span>
+    </a>
+    <nav>
+      <a href="index.html" class="checkout-btn" style="display:block; text-align:center; text-decoration:none;"
+      href="#home">Início</a>
+      <a href="#produtos">Produtos</a>
+      <a href="#categorias">Categorias</a>
+      <a href="#contato">Contato</a>
+    </nav>
+    <button class="cart-btn">
+      🛒 Carrinho
+      <span class="cart-count">0</span>
+    </button>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Formas de Pagamento</h1>
+      <p>Escolha a opção mais prática e segura para suas compras</p>
+    </div>
+  </section>
+
+  <!-- Conteúdo -->
+  <section class="payment-section">
+
+    <!-- PIX Destaque com QR Code -->
+    <div class="pix-highlight">
+      <div class="pix-qr-box">
+        <img 
+          src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=00020126580014BR.GOV.BCB.PIX0136mercadofresco@exemplo.com.br5204000053039865802BR5914Mercado%20Fresco6009Sao%20Paulo62070503***6304ABCD" 
+          alt="QR Code PIX - Mercado dos CUIUDO"
+          width="200"
+          height="200"
+        >
+        <p class="pix-qr-label">Escaneie com o app do seu banco</p>
+      </div>
+
+      <div class="pix-info">
+        <h2>⚡ Pague com PIX</h2>
+        <p>A forma mais rápida e prática. O pagamento é confirmado em segundos, 24 horas por dia, sem taxas extras.</p>
+
+        <div class="pix-key-box">
+          <label>Chave PIX (e-mail)</label>
+          <div class="pix-key-value">
+            <span>mercadodoscuiudo@gmail.com.br</span>
+            <button type="button" onclick="navigator.clipboard.writeText('mercadofresco@exemplo.com.br'); this.textContent='Copiado!'; setTimeout(() => this.textContent='Copiar', 2000)">
+              Copiar
+            </button>
+          </div>
+        </div>
+
+        <ul class="pix-steps">
+          <li><span>1</span> Abra o app do seu banco ou carteira digital</li>
+          <li><span>2</span> Escolha pagar com PIX e escaneie o QR Code</li>
+          <li><span>3</span> Confirme o valor e finalize o pagamento</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Outras formas -->
+    <h2 class="section-title">Outras formas de pagamento</h2>
+
+    <div class="methods-grid">
+      <!-- Cartão -->
+      <div class="method-card">
+        <div class="method-icon">💳</div>
+        <h3>Cartão de Crédito e Débito</h3>
+        <p>Aceitamos Visa, Mastercard, Elo, American Express e Hipercard. Parcele em até 12x sem juros no crédito.</p>
+        <span class="badge badge-blue">Até 12x</span>
+      </div>
+
+      <!-- Boleto -->
+      <div class="method-card">
+        <div class="method-icon">📄</div>
+        <h3>Boleto Bancário</h3>
+        <p>Gere o boleto e pague em qualquer banco, lotérica ou aplicativo. Compensação em até 2 dias úteis.</p>
+        <span class="badge badge-yellow">Até 2 dias úteis</span>
+      </div>
+
+      <!-- Dinheiro -->
+      <div class="method-card">
+        <div class="method-icon">💵</div>
+        <h3>Dinheiro na Entrega</h3>
+        <p>Pague em espécie no momento da entrega. Tenha o valor exato ou o troco disponível para agilizar.</p>
+        <span class="badge">Na entrega</span>
+      </div>
+
+      <!-- Vale -->
+      <div class="method-card">
+        <div class="method-icon">🍽️</div>
+        <h3>Vale-Alimentação / Refeição</h3>
+        <p>Aceitamos Ticket, Sodexo, Alelo, VR e Pluxee. Consulte a disponibilidade no momento do pedido.</p>
+        <span class="badge badge-blue">Benefícios</span>
+      </div>
+
+      <!-- Transferência -->
+      <div class="method-card">
+        <div class="method-icon">🏦</div>
+        <h3>Transferência Bancária</h3>
+        <p>Faça uma transferência TED ou DOC para nossa conta. Após a confirmação, processamos seu pedido.</p>
+        <span class="badge badge-yellow">Sob consulta</span>
+      </div>
+
+      <!-- PIX resumo -->
+      <div class="method-card">
+        <div class="method-icon">⚡</div>
+        <h3>PIX</h3>
+        <p>Pagamento instantâneo 24h por dia. Aprovação imediata e sem taxas extras para você.</p>
+        <span class="badge">Mais rápido</span>
+      </div>
+    </div>
+
+    <!-- Como funciona -->
+    <div class="how-it-works">
+      <h2>Como funciona o pagamento?</h2>
+      <div class="steps-grid">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <h4>Escolha os produtos</h4>
+          <p>Adicione os itens ao carrinho e finalize o pedido normalmente.</p>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <h4>Selecione a forma de pagamento</h4>
+          <p>No checkout, escolha entre PIX, cartão, boleto ou outras opções.</p>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <h4>Confirme e pronto!</h4>
+          <p>Após a confirmação, preparamos e entregamos seu pedido com carinho.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Segurança -->
+    <div class="security-box">
+      <div class="icon">🔒</div>
+      <div>
+        <h3>Pagamentos 100% seguros</h3>
+        <p>Utilizamos criptografia SSL e processadores de pagamento confiáveis. Seus dados bancários e de cartão nunca são armazenados em nossos servidores.</p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="#">Política de Privacidade</a>
+      <a href="#">Termos de Uso</a>
+      <a href="#">Trocas e Devoluções</a>
+      <a href="#">Fale Conosco</a>
+    </div>
+    <p>© 2026 Mercado Fresco. Todos os direitos reservados.</p>
+  </footer>
+
+</body>
+</html>
